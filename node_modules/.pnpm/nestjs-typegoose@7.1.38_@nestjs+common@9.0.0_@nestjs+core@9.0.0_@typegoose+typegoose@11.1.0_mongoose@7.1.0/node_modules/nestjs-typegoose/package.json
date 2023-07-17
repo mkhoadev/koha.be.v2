@@ -1,0 +1,102 @@
+{
+  "name": "nestjs-typegoose",
+  "version": "7.1.38",
+  "description": "A nestjs module wrapper for typegoose",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "test:ci": "jest",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:watch": "jest --watch",
+    "coverage": "yarn run test:cov && cat ./coverage/lcov.info | coveralls",
+    "prepare": "npm run build",
+    "commit": "git cz"
+  },
+  "author": "Kyle Pfromer",
+  "license": "MIT",
+  "repository": "github:kpfromer/nestjs-typegoose",
+  "peerDependencies": {
+    "@nestjs/common": "^6.10.1 || ^7.0.0",
+    "@nestjs/core": "^6.10.1 || ^7.0.0",
+    "@typegoose/typegoose": "^6.2.1 || ^7.0.0",
+    "mongoose": "^5.10.6"
+  },
+  "dependencies": {
+    "is-class": "^0.0.9",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "9.1.2",
+    "@commitlint/config-conventional": "9.1.2",
+    "@nestjs/common": "7.4.4",
+    "@nestjs/core": "7.4.4",
+    "@nestjs/platform-express": "7.4.4",
+    "@nestjs/testing": "7.4.4",
+    "@semantic-release/changelog": "5.0.1",
+    "@semantic-release/commit-analyzer": "8.0.1",
+    "@semantic-release/git": "9.0.0",
+    "@semantic-release/npm": "7.0.5",
+    "@semantic-release/release-notes-generator": "9.0.1",
+    "@typegoose/typegoose": "7.4.0",
+    "@types/jest": "26.0.13",
+    "@types/mongodb": "^3.5.27",
+    "@types/mongoose": "5.7.36",
+    "@types/supertest": "2.0.10",
+    "commitizen": "4.2.1",
+    "coveralls": "3.1.0",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "4.3.0",
+    "jest": "26.4.2",
+    "mongodb-memory-server": "6.7.1",
+    "mongoose": "5.10.4",
+    "rxjs": "6.6.3",
+    "semantic-release": "17.1.1",
+    "supertest": "latest",
+    "ts-jest": "26.3.0",
+    "tslint": "5.20.1",
+    "typescript": "3.9.7"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "resetMocks": true,
+    "testEnvironment": "node"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/git"
+    ],
+    "branch": "master"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test",
+      "pre-push": "yarn test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
