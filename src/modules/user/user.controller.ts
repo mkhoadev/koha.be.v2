@@ -13,13 +13,10 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ParseIdPipe } from "src/global/pipes/parseId.pipe";
 import { Auth } from "../auth/decorator/auth.decorator";
-import { Roles } from "../auth/decorator/roles.decorator";
 import { JwtAuthGuard } from "../auth/guard/jwt.guard";
-import { RolesGuard } from "../auth/guard/roles.guard";
 import { GetNonceDto } from "./dtos/get-nonce.dto";
 import { QueryUserDto } from "./dtos/query-user.dto";
 import { UpdateUserDto } from "./dtos/update-user.dto";
-import { UserRoleEnum } from "./interfaces/userRole.enum";
 import { UserDocument } from "./schemas/user.schema";
 import { UserService } from "./user.service";
 

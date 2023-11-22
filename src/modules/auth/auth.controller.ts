@@ -7,6 +7,7 @@ import { AuthService } from "./auth.service";
 import { Auth } from "./decorator/auth.decorator";
 import { JwtAuthGuard } from "./guard/jwt.guard";
 import { JwtPayload } from "./interface/jwtPayload.interface";
+import { RegisterUserDto } from "../user/dtos/register-user.dto";
 
 @ApiBearerAuth()
 @Controller("auth")
@@ -16,6 +17,11 @@ export class AuthController {
   @Post("login")
   async login(@Body() loginDto: LoginDto) {
     return await this.service.credentialByPassword(loginDto?.username, loginDto?.password);
+  }
+
+  @Post("register")
+  async register(@Body() registerUser: RegisterUserDto) {
+    return await this.service.register(registerUser);
   }
 
   @Post("wallet_login")
