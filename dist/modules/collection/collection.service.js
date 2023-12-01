@@ -16,7 +16,7 @@ exports.CollectionService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const schema_1 = require("./schema/schema");
+const collection_schema_1 = require("./schema/collection.schema");
 let CollectionService = class CollectionService {
     constructor(model) {
         this.model = model;
@@ -40,12 +40,12 @@ let CollectionService = class CollectionService {
         return this.model.findByIdAndUpdate(id, payload);
     }
     async updateContractAddress(id, contractAddress) {
-        return this.model.findByIdAndUpdate(id, { contractAddress: contractAddress });
+        return this.model.findByIdAndUpdate(id, { contractAddress: contractAddress, launchpad: true });
     }
 };
 CollectionService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(schema_1.Collection.name)),
+    __param(0, (0, mongoose_1.InjectModel)(collection_schema_1.Collection.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], CollectionService);
 exports.CollectionService = CollectionService;

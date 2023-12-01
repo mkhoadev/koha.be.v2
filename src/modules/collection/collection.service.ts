@@ -1,14 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import * as bcrypt from "bcrypt";
-import * as crypto from "crypto";
-import { encodeBytes32String, getAddress } from "ethers";
 import { Model } from "mongoose";
-import { PaginateResponse } from "src/global/interfaces/paginate.interface";
-import { v4 as uuidv4 } from "uuid";
-import { Collection } from "./schema/schema";
-import { QueryCollectionDto } from "./dtos/query-collection.dto";
+
 import { CreateCollectionDto } from "./dtos/create-collection.dto";
+import { QueryCollectionDto } from "./dtos/query-collection.dto";
+import { Collection } from "./schema/collection.schema";
 
 @Injectable()
 export class CollectionService {
@@ -16,7 +12,6 @@ export class CollectionService {
 
   async findAll(query: QueryCollectionDto) {
     const result = await this.model.find();
-
     return {
       items: result,
     };
@@ -39,6 +34,6 @@ export class CollectionService {
   }
 
   async updateContractAddress(id: string, contractAddress: string) {
-    return this.model.findByIdAndUpdate(id, { contractAddress: contractAddress });
+    return this.model.findByIdAndUpdate(id, { contractAddress: contractAddress, launchpad: true });
   }
 }

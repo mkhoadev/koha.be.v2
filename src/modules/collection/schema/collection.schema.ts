@@ -13,6 +13,18 @@ export class Collection extends BaseModel {
   symbol: string;
 
   @Prop()
+  chainId: string;
+
+  @Prop()
+  uri: string;
+
+  @Prop()
+  creator: string;
+
+  @Prop({ default: false })
+  launchpad: boolean;
+
+  @Prop()
   metadata: string;
 
   @Prop()

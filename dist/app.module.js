@@ -15,6 +15,7 @@ const auth_module_1 = require("./modules/auth/auth.module");
 const user_module_1 = require("./modules/user/user.module");
 const config_1 = require("@nestjs/config");
 const collection_module_1 = require("./modules/collection/collection.module");
+const nft_module_1 = require("./modules/nft/nft.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -31,6 +32,7 @@ AppModule = __decorate([
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             collection_module_1.CollectionModule,
+            nft_module_1.NftModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

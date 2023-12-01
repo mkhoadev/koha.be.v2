@@ -32,6 +32,10 @@ export type CollectionDocument = HydratedDocument<Collection>;
 export declare class Collection extends BaseModel {
     name: string;
     symbol: string;
+    chainId: string;
+    uri: string;
+    creator: string;
+    launchpad: boolean;
     metadata: string;
     contractAddress: string;
     image: string;

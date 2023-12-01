@@ -25,9 +25,9 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from "mongoose";
-import { Collection } from "./schema/schema";
-import { QueryCollectionDto } from "./dtos/query-collection.dto";
 import { CreateCollectionDto } from "./dtos/create-collection.dto";
+import { QueryCollectionDto } from "./dtos/query-collection.dto";
+import { Collection } from "./schema/collection.schema";
 export declare class CollectionService {
     private model;
     constructor(model: Model<Collection>);

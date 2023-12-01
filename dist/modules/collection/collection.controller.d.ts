@@ -31,20 +31,20 @@ export declare class CollectionController {
     private readonly service;
     constructor(service: CollectionService);
     getAll(query: QueryCollectionDto): Promise<{
-        items: (import("mongoose").Document<unknown, {}, import("./schema/schema").Collection> & import("./schema/schema").Collection & {
+        items: (import("mongoose").Document<unknown, {}, import("./schema/collection.schema").Collection> & import("./schema/collection.schema").Collection & {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
-    findById(id: string): Promise<import("mongoose").Document<unknown, {}, import("./schema/schema").Collection> & import("./schema/schema").Collection & {
+    findById(id: string): Promise<import("mongoose").Document<unknown, {}, import("./schema/collection.schema").Collection> & import("./schema/collection.schema").Collection & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    create(payload: CreateCollectionDto): Promise<import("mongoose").Document<unknown, {}, import("./schema/schema").Collection> & import("./schema/schema").Collection & {
+    create(payload: CreateCollectionDto): Promise<import("mongoose").Document<unknown, {}, import("./schema/collection.schema").Collection> & import("./schema/collection.schema").Collection & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    updateContractAddress(id: string, payload: any): Promise<import("mongoose").Document<unknown, {}, import("./schema/schema").Collection> & import("./schema/schema").Collection & {
+    updateContractAddress(id: string, payload: any): Promise<import("mongoose").Document<unknown, {}, import("./schema/collection.schema").Collection> & import("./schema/collection.schema").Collection & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    update(id: string, payload: CreateCollectionDto): Promise<import("mongoose").Document<unknown, {}, import("./schema/schema").Collection> & import("./schema/schema").Collection & {
+    update(id: string, payload: CreateCollectionDto): Promise<import("mongoose").Document<unknown, {}, import("./schema/collection.schema").Collection> & import("./schema/collection.schema").Collection & {
         _id: import("mongoose").Types.ObjectId;
     }>;
 }

@@ -6,6 +6,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { UserModule } from "./modules/user/user.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { CollectionModule } from "./modules/collection/collection.module";
+import { NftModule } from "./modules/nft/nft.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CollectionModule } from "./modules/collection/collection.module";
     AuthModule,
     UserModule,
     CollectionModule,
+    NftModule,
   ],
   controllers: [AppController],
   providers: [AppService],

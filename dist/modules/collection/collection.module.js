@@ -11,13 +11,13 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const collection_controller_1 = require("./collection.controller");
 const collection_service_1 = require("./collection.service");
-const schema_1 = require("./schema/schema");
+const collection_schema_1 = require("./schema/collection.schema");
 let CollectionModule = class CollectionModule {
 };
 CollectionModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: schema_1.Collection.name, schema: schema_1.CollectionSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: collection_schema_1.Collection.name, schema: collection_schema_1.CollectionSchema }])],
         controllers: [collection_controller_1.CollectionController],
         providers: [collection_service_1.CollectionService],
         exports: [collection_service_1.CollectionService],
