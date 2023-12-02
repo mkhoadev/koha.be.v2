@@ -36,13 +36,16 @@ export declare class NftService {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
+    getAllByAddress(address: string): Promise<{
+        items: any[];
+    }>;
     findById(id: string): Promise<import("mongoose").Document<unknown, {}, Nft> & Nft & {
         _id: import("mongoose").Types.ObjectId;
     }>;
     findOneById(id: string): Promise<import("mongoose").Document<unknown, {}, Nft> & Nft & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    create(txHash: string): Promise<any>;
+    create(txHash: string): Promise<void>;
     update(id: string, payload: CreateNftDto): Promise<import("mongoose").Document<unknown, {}, Nft> & Nft & {
         _id: import("mongoose").Types.ObjectId;
     }>;

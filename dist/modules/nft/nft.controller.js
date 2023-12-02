@@ -23,6 +23,9 @@ let NftController = class NftController {
     constructor(service) {
         this.service = service;
     }
+    async getAllByCollection(address) {
+        return await this.service.getAllByAddress(address);
+    }
     async getAll(query) {
         return await this.service.findAll(query);
     }
@@ -39,6 +42,13 @@ let NftController = class NftController {
         return await this.service.update(id, payload);
     }
 };
+__decorate([
+    (0, common_1.Get)("/:address"),
+    __param(0, (0, common_1.Param)("address")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], NftController.prototype, "getAllByCollection", null);
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),

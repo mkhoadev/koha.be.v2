@@ -1,12 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { ethers } from "ethers";
 import { Model } from "mongoose";
+import { abi } from "../../contracts/ERC721Launchpad/ERC721Launchpad.json";
 import { CreateNftDto } from "./dtos/create-nft.dto";
 import { QueryNftDto } from "./dtos/query-nft.dto";
 import { Nft } from "./schema/nft.schema";
-import { AbiCoder, ethers } from "ethers";
-import { abi } from "../../contracts/ERC721Launchpad/ERC721Launchpad.json";
-import axios from "axios";
 
 @Injectable()
 export class NftService {
@@ -14,6 +13,35 @@ export class NftService {
 
   async findAll(query: QueryNftDto) {
     const result = await this.model.find();
+
+    return {
+      items: result,
+    };
+  }
+
+  async getAllByAddress(address: string) {
+    const aggregation = [];
+
+    aggregation.push(
+      {
+        $lookup: {
+          from: "collections",
+          localField: "contractAddress",
+          foreignField: "contractAddress",
+          pipeline: [
+            {
+              $match: {
+                contractAddress: address,
+              },
+            },
+          ],
+          as: "collection",
+        },
+      },
+      { $unwind: "$collection" },
+    );
+
+    const result = await this.model.aggregate(aggregation);
 
     return {
       items: result,
@@ -29,10 +57,7 @@ export class NftService {
   }
 
   async create(txHash: string) {
-    const provider: any = new ethers.JsonRpcProvider(
-      "https://polygon-mumbai.blockpi.network/v1/rpc/public",
-    );
-
+    const provider: any = new ethers.JsonRpcProvider("https://polygon-mumbai-bor.publicnode.com");
     const txReceipt = await provider.getTransactionReceipt(txHash);
 
     if (txReceipt) {
@@ -55,14 +80,18 @@ export class NftService {
             ownerAddress: owner,
             contractAddress: logs[i].address,
           };
-
-          this.model.create(nftPayload);
+          const nftExist = await this.model.findOne({
+            tokenId: +tokenId,
+            contractAddress: logs[i].address,
+          });
+          if (!nftExist) {
+            this.model.create(nftPayload);
+          }
         }
       }
       return;
     } else {
-      console.log("Contract address not found in the transaction receipt.");
-      return null;
+      throw new HttpException("Contract address not found in the transaction receipt.", 3001);
     }
   }
 

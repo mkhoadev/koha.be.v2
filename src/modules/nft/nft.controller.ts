@@ -11,6 +11,11 @@ import { NftService } from "./nft.service";
 export class NftController {
   constructor(private readonly service: NftService) {}
 
+  @Get("/:address")
+  async getAllByCollection(@Param("address") address: string) {
+    return await this.service.getAllByAddress(address);
+  }
+
   @Get()
   async getAll(@Query() query: QueryNftDto) {
     return await this.service.findAll(query);

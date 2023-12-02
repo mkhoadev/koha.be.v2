@@ -30,6 +30,9 @@ import { NftService } from "./nft.service";
 export declare class NftController {
     private readonly service;
     constructor(service: NftService);
+    getAllByCollection(address: string): Promise<{
+        items: any[];
+    }>;
     getAll(query: QueryNftDto): Promise<{
         items: (import("mongoose").Document<unknown, {}, import("./schema/nft.schema").Nft> & import("./schema/nft.schema").Nft & {
             _id: import("mongoose").Types.ObjectId;
@@ -38,7 +41,7 @@ export declare class NftController {
     findById(id: string): Promise<import("mongoose").Document<unknown, {}, import("./schema/nft.schema").Nft> & import("./schema/nft.schema").Nft & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    create(payload: any): Promise<any>;
+    create(payload: any): Promise<void>;
     updateContractAddress(id: string, payload: any): Promise<import("mongoose").Document<unknown, {}, import("./schema/nft.schema").Nft> & import("./schema/nft.schema").Nft & {
         _id: import("mongoose").Types.ObjectId;
     }>;
