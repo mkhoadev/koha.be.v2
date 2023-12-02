@@ -1,4 +1,5 @@
 /// <reference types="mongoose/types/document" />
+/// <reference types="mongoose/types/types" />
 /// <reference types="mongoose/types/models" />
 /// <reference types="mongoose/types/schemaoptions" />
 /// <reference types="mongoose/types/aggregate" />

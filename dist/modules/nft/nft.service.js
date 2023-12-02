@@ -58,39 +58,33 @@ let NftService = class NftService {
         return await this.model.findById(id);
     }
     async create(txHash) {
-        const provider = new ethers_1.ethers.JsonRpcProvider("https://polygon-mumbai-bor.publicnode.com");
+        const provider = new ethers_1.ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
         const txReceipt = await provider.getTransactionReceipt(txHash);
-        if (txReceipt) {
-            const logs = txReceipt.logs;
-            for (let i = 0; i < logs.length - 1; i++) {
-                const contract = new ethers_1.ethers.Contract(logs[i].address, ERC721Launchpad_json_1.abi, provider);
-                const tokenId = logs[i].topics[logs[i].topics.length - 1];
-                const owner = await contract.ownerOf(tokenId);
-                const metadata = await contract.tokenURI(tokenId);
-                const res = await fetch(metadata);
-                if (res.status === 200) {
-                    const nftImage = await res.json();
-                    const nftPayload = {
-                        name: nftImage.name,
-                        tokenId: +tokenId,
-                        image: nftImage.image,
-                        metadata: metadata,
-                        ownerAddress: owner,
-                        contractAddress: logs[i].address,
-                    };
-                    const nftExist = await this.model.findOne({
-                        tokenId: +tokenId,
-                        contractAddress: logs[i].address,
-                    });
-                    if (!nftExist) {
-                        this.model.create(nftPayload);
-                    }
-                }
-            }
-            return;
-        }
-        else {
+        if (!txReceipt) {
             throw new common_1.HttpException("Contract address not found in the transaction receipt.", 3001);
+        }
+        const fetchPromises = txReceipt.logs.map(async (log) => {
+            const contract = new ethers_1.ethers.Contract(log.address, ERC721Launchpad_json_1.abi, provider);
+            const tokenId = log.topics[log.topics.length - 1];
+            const [owner, metadata] = await Promise.all([
+                contract.ownerOf(tokenId),
+                contract.tokenURI(tokenId),
+            ]);
+            const res = await fetch(metadata);
+            if (res.status === 200) {
+                const nftImage = await res.json();
+                return Object.assign(Object.assign({}, nftImage), { tokenId: +tokenId, ownerAddress: owner, contractAddress: log.address });
+            }
+        });
+        const nftData = (await Promise.all(fetchPromises)).filter(Boolean);
+        for (const data of nftData) {
+            const nftExist = await this.model.findOne({
+                tokenId: data.tokenId,
+                contractAddress: data.contractAddress,
+            });
+            if (!nftExist) {
+                await this.model.create(data);
+            }
         }
     }
     async update(id, payload) {
